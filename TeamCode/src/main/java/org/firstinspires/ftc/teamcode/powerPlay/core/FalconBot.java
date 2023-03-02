@@ -10,7 +10,6 @@ public class FalconBot {
     private static final String TAG = "FalconBot";
     private boolean showTelemetry = true;
     public FalconBulkRead bulkRead = null;
-    public FalconSettings settings = null;
     public FalconDriveTrain driveTrain = null;
 
     // hand, lift, picker, aligner
@@ -18,7 +17,6 @@ public class FalconBot {
     public FalconLift falconLift = null;
     public FalconConePicker conePicker = null;
     public FalconHand falconHand = null;
-    public FalconOpenCvCam falconOpenCvCam = null;
     HardwareMap hwMap = null;
     Telemetry telemetry = null;
 
@@ -67,7 +65,6 @@ public class FalconBot {
         this.telemetry = telemetry;
 
         bulkRead = new FalconBulkRead(hardwareMap);
-        settings = new FalconSettings();
         driveTrain = new FalconDriveTrain(this);
         driveTrain.init(hardwareMap, telemetry);
         gyro = new FalconGyro();
@@ -78,10 +75,6 @@ public class FalconBot {
         conePicker.init(hardwareMap, telemetry);
         falconHand = new FalconHand();
         falconHand.init(hardwareMap, telemetry, this);
-        falconOpenCvCam = new FalconOpenCvCam();
-        if (initWebCams) {
-            falconOpenCvCam.init(hardwareMap, telemetry);
-        }
 
         telemetry.addData(TAG, "initialized");
         FalconLogger.exit();

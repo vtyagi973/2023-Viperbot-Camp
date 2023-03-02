@@ -1,9 +1,6 @@
 Issues
 
 Improvements
-- Add dead wheel odometery
-- recalibrate roadrunner
-- build M5 and H5 handlers
 
 Vuforia developer key
 AcRuZsf/////AAABmS9lhPP8OEViszn4ZqQHBd6JuDSpkonhwBTo+fou6npEXikvqQNj7GH05YHbFS8OUCHojw7MEYMg9zvDm4oOdqMFwGbULTqwPDpUYCcqXpvhuttkyNdhP7O/3luilJ9v4qyYmVG9kycjQoR8cikGL0x8LoIi2y6V0Kiz8goR7A7thJWllJj678jL4+A29vjVCinQW2gyt+vFohjZU+kaH849m9rpIJvg8pCtF3yaVwkMqp2MWJJWbOay6Q/uKKK0ehcEraYTW0QdnHgGVNVPLCstaonAPALWLEqrTolTD0fl3CqT8kDYcmVoXnUEzJ42E6cP+AZLuJ72C/5pXvUvVJFYvAw9yaAiGPCYeNZArnPR
