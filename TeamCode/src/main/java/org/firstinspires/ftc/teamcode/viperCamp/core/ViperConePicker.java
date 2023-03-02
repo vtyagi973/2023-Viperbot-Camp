@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -11,8 +11,8 @@ import java.util.Locale;
 /**
  * A class to manage the robot cone picker.
  */
-public class FalconConePicker {
-    private static final String TAG = "FalconConePicker";
+public class ViperConePicker {
+    private static final String TAG = "ViperConePicker";
     public static final String CONE_PICKER_SERVO_NAME = "conePickerServo";
     private static final double UP_POSITION = 0.5610;
     private static final double DOWN_POSITION = 0.4890;
@@ -30,7 +30,7 @@ public class FalconConePicker {
      * @param telemetry   The telemetry to use.
      */
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Save reference to Hardware map
         hwMap = hardwareMap;
         this.telemetry = telemetry;
@@ -44,7 +44,7 @@ public class FalconConePicker {
         moveDown(false);
         showTelemetry();
         telemetry.addData(TAG, "initialized");
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -53,7 +53,7 @@ public class FalconConePicker {
      * @param waitTillUp When true, waits till the cone picker is fully up.
      */
     public void moveUp(boolean waitTillUp) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (!pickerIsUp) {
             if (conePickerServo != null) {
                 conePickerServo.setPosition(UP_POSITION);
@@ -62,13 +62,13 @@ public class FalconConePicker {
             }
 
             if (waitTillUp) {
-                FalconUtils.sleep(UP_DOWN_TIME_MS);
+                ViperUtils.sleep(UP_DOWN_TIME_MS);
             }
 
             pickerIsUp = true;
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -77,7 +77,7 @@ public class FalconConePicker {
      * @param waitTillDown When true, waits till the cone picker is fully down.
      */
     public void moveDown(boolean waitTillDown) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (pickerIsUp) {
             if (conePickerServo != null) {
                 conePickerServo.setPosition(DOWN_POSITION);
@@ -86,13 +86,13 @@ public class FalconConePicker {
             }
 
             if (waitTillDown) {
-                FalconUtils.sleep(UP_DOWN_TIME_MS);
+                ViperUtils.sleep(UP_DOWN_TIME_MS);
             }
 
             pickerIsUp = false;
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -115,12 +115,12 @@ public class FalconConePicker {
      * Emits cone picker telemetry. Helps with debugging.
      */
     public void showTelemetry() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (showTelemetry && conePickerServo != null) {
             telemetry.addData(TAG, String.format(Locale.US, "Position %5.4f",
                     conePickerServo.getPosition()));
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -19,8 +19,8 @@ import java.util.List;
  * Motor:  Right drive motor: "rightFrontMotor"
  * Motor:  Right drive motor: "rightRearMotor"
  */
-public class FalconDriveTrain {
-    private static final String TAG = "FalconDriveTrain";
+public class ViperDriveTrain {
+    private static final String TAG = "ViperDriveTrain";
     public static final double MAXIMUM_FORWARD_POWER = 1.00;
     public static final double MECANUM_POWER_BOOST_FACTOR = 0.90;
     public static final double CRAWL_TELE_OP_FACTOR = 5.0;
@@ -38,7 +38,7 @@ public class FalconDriveTrain {
     private boolean precisionDriveMode = false;
     HardwareMap hwMap = null;
     Telemetry telemetry = null;
-    private final FalconBot parent;
+    private final ViperBot parent;
     private DcMotor leftFrontMotor = null;
     private DcMotor leftRearMotor = null;
     private DcMotor rightFrontMotor = null;
@@ -53,7 +53,7 @@ public class FalconDriveTrain {
     private final boolean enableUnbalancedRobotCorrection = true;
     private final boolean enableMecanumPowerBoost = true;
 
-    public FalconDriveTrain(FalconBot robot) {
+    public ViperDriveTrain(ViperBot robot) {
         parent = robot;
     }
 
@@ -66,7 +66,7 @@ public class FalconDriveTrain {
      *                 is executing. Shorter the loopTime, shorter the braking power step.
      */
     public void fieldOrientedDrive(Gamepad gamePad1, Gamepad gamePad2, ElapsedTime loopTime) {
-        FalconLogger.enter();
+        ViperLogger.enter();
 
         // Setup a variable for each side drive wheel to display power level for telemetry
         double leftFrontPower = ZERO_POWER;
@@ -84,7 +84,7 @@ public class FalconDriveTrain {
         if (powerMagnitude > JITTER) {
             // All angles are in radians
             // Calculate default formulaic wheel power.
-            double theta = Math.atan2(y, x) - (parent.gyro.Heading + FalconGyro.endAutoOpHeading) * Math.PI / 180.0;
+            double theta = Math.atan2(y, x) - (parent.gyro.Heading + ViperGyro.endAutoOpHeading) * Math.PI / 180.0;
             leftFrontPower = rightRearPower = Math.sin(theta + Math.PI / 4.0) * powerMagnitude;
             rightFrontPower = leftRearPower = Math.sin(theta - Math.PI / 4.0) * powerMagnitude;
 
@@ -114,8 +114,8 @@ public class FalconDriveTrain {
                 // TODO compute the tangent and not compare raw x, y
                 // Tangent comparison will maintain heading when driver changes power
                 // proportionally to slow-down/speed-up AND wants to maintain heading.
-                if (powerMagnitude > JITTER && FalconUtils.areEqual(lastX, xMagnitude)
-                        && FalconUtils.areEqual(lastY, yMagnitude)) {
+                if (powerMagnitude > JITTER && ViperUtils.areEqual(lastX, xMagnitude)
+                        && ViperUtils.areEqual(lastY, yMagnitude)) {
                     // maintain last heading by turning the robot slightly, if needed.
                     double headingOffset = parent.gyro.getHeadingOffset(lastHeading);
                     turn = parent.gyro.getSteeringCorrection(headingOffset, KP_DRIVE);
@@ -127,7 +127,7 @@ public class FalconDriveTrain {
                 }
             }
         } else {
-            int turnDirection = FalconUtils.sign(turn);
+            int turnDirection = ViperUtils.sign(turn);
             turn = MINIMUM_TURN_POWER + turnMagnitude * (MAXIMUM_TURN_POWER - MINIMUM_TURN_POWER);
             turn *= turnDirection;
             if (enableUnbalancedRobotCorrection) {
@@ -187,7 +187,7 @@ public class FalconDriveTrain {
         }
 
         setDrivePowerSmooth(leftFrontPower, leftRearPower, rightFrontPower, rightRearPower, loopTime);
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -197,7 +197,7 @@ public class FalconDriveTrain {
      * @param telemetry   The telemetry to use.
      */
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Save reference to Hardware map
         hwMap = hardwareMap;
         this.telemetry = telemetry;
@@ -232,7 +232,7 @@ public class FalconDriveTrain {
 
         showTelemetry();
         telemetry.addData("Robot", "initialized");
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -241,7 +241,7 @@ public class FalconDriveTrain {
      * @param gamePad The gamePad used for driving.
      */
     public void povDrive(Gamepad gamePad) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Setup a variable for each side drive wheel to display power level for telemetry
         double leftFrontPower;
         double leftRearPower;
@@ -255,7 +255,7 @@ public class FalconDriveTrain {
         if (driveMagnitude <= JITTER) {
             drive = ZERO_POWER;
         } else {
-            driveDirection = FalconUtils.sign(drive);
+            driveDirection = ViperUtils.sign(drive);
             drive = MINIMUM_FORWARD_TELE_OP_POWER + driveMagnitude * (MAXIMUM_FORWARD_POWER - MINIMUM_FORWARD_TELE_OP_POWER);
             drive *= driveDirection;
             if (gamePad.left_stick_button) {
@@ -268,7 +268,7 @@ public class FalconDriveTrain {
         if (turnMagnitude <= JITTER) {
             turn = ZERO_POWER;
         } else {
-            int turnDirection = FalconUtils.sign(turn);
+            int turnDirection = ViperUtils.sign(turn);
             turn = MINIMUM_TURN_POWER + turnMagnitude * (MAXIMUM_TURN_POWER - MINIMUM_TURN_POWER);
             turn *= turnDirection;
             if (gamePad.right_stick_button) {
@@ -282,7 +282,7 @@ public class FalconDriveTrain {
         if (strafeMagnitude <= JITTER) {
             strafe = ZERO_POWER;
         } else {
-            strafeDirection = FalconUtils.sign(strafe);
+            strafeDirection = ViperUtils.sign(strafe);
             strafe = MINIMUM_TURN_POWER + strafeMagnitude * (MAXIMUM_TURN_POWER - MINIMUM_TURN_POWER);
             strafe *= strafeDirection;
             if (gamePad.left_stick_button) {
@@ -313,19 +313,19 @@ public class FalconDriveTrain {
 
         setDrivePowerSmooth(leftFrontPower, leftRearPower, rightFrontPower, rightRearPower, new ElapsedTime());
         showTelemetry();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
      * Send given power to respective wheels.
      */
     public void setDrivePower(double leftFrontPower, double leftRearPower, double rightFrontPower, double rightRearPower) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         leftFrontMotor.setPower(leftFrontPower);
         leftRearMotor.setPower(leftRearPower);
         rightFrontMotor.setPower(rightFrontPower);
         rightRearMotor.setPower(rightRearPower);
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -341,12 +341,12 @@ public class FalconDriveTrain {
      */
     public void setDrivePowerSmooth(double leftFrontPower, double leftRearPower,
                                     double rightFrontPower, double rightRearPower, ElapsedTime loopTime) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         setDrivePowerSmooth(leftFrontMotor, leftFrontPower, loopTime);
         setDrivePowerSmooth(leftRearMotor, leftRearPower, loopTime);
         setDrivePowerSmooth(rightFrontMotor, rightFrontPower, loopTime);
         setDrivePowerSmooth(rightRearMotor, rightRearPower, loopTime);
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -383,20 +383,20 @@ public class FalconDriveTrain {
      * @param zeroPowerBehavior The zero power behavior (brake or roll).
      */
     public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         ZeroPowerBehavior = zeroPowerBehavior;
         for (DcMotor motor : motors) {
             motor.setZeroPowerBehavior(ZeroPowerBehavior);
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
      * Display motor power.
      */
     public void showTelemetry() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (showTelemetry) {
             telemetry.addData("Left Front Motor", "power %.2f distance %d", leftFrontMotor.getPower(), leftFrontMotor.getCurrentPosition());
             telemetry.addData("Left Rear Motor", "power %.2f distance %d", leftRearMotor.getPower(), leftRearMotor.getCurrentPosition());
@@ -404,15 +404,15 @@ public class FalconDriveTrain {
             telemetry.addData("Right Rear Motor", "power %.2f distance %d", rightRearMotor.getPower(), rightRearMotor.getCurrentPosition());
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
      * Stops the robot by sending zero power to all drive motors.
      */
     public void stop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         setDrivePower(ZERO_POWER, ZERO_POWER, ZERO_POWER, ZERO_POWER);
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }

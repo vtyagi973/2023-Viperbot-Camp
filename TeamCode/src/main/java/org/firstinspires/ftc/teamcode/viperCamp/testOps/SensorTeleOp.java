@@ -1,13 +1,13 @@
-package org.firstinspires.ftc.teamcode.powerPlay.testOps;
+package org.firstinspires.ftc.teamcode.viperCamp.testOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconLogger;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconSensors;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconUtils;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperLogger;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperSensors;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperUtils;
 
 @Disabled
 @TeleOp(group = "TestOp")
@@ -15,7 +15,7 @@ public class SensorTeleOp extends OpMode {
     private static final String TAG = "Sensors";
 
     // Declare OpMode members
-    FalconSensors sensors = null;
+    ViperSensors sensors = null;
     private ElapsedTime runtime = null;
     private ElapsedTime loopTime = null;
 
@@ -24,13 +24,13 @@ public class SensorTeleOp extends OpMode {
      */
     @Override
     public void init() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Initializing, please wait...");
         telemetry.update();
         runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         loopTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /*
@@ -40,7 +40,7 @@ public class SensorTeleOp extends OpMode {
     public void init_loop() {
         telemetry.addData(">", "Initialization complete, Waiting for start.");
         telemetry.update();
-        FalconUtils.sleep(100);
+        ViperUtils.sleep(100);
     }
 
     /*
@@ -56,7 +56,7 @@ public class SensorTeleOp extends OpMode {
      */
     @Override
     public void loop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Show the elapsed game time and wheel power.
         loopTime.reset();
         telemetry.addData(">", "Move junction in front of the robot");
@@ -71,9 +71,9 @@ public class SensorTeleOp extends OpMode {
      */
     @Override
     public void stop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Stopping Driver Op");
         telemetry.update();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -8,11 +8,11 @@ import org.firstinspires.ftc.teamcode.BuildConfig;
 /**
  * A global utility for managing robot execution logs.
  */
-public final class FalconLogger {
-    private static final String TAG = "FalconLogger";
+public final class ViperLogger {
+    private static final String TAG = "ViperLogger";
 
     /* Constructor */
-    public FalconLogger() {
+    public ViperLogger() {
     }
 
     public static void debug(String format, Object... args) {

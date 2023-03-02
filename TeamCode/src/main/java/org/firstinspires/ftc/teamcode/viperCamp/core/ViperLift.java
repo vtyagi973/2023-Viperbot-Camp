@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -14,8 +14,8 @@ import java.util.Locale;
 /**
  * A class to manage the robot lift.
  */
-public class FalconLift {
-    private static final String TAG = "FalconLift";
+public class ViperLift {
+    private static final String TAG = "ViperLift";
     public static final int CONE_HEIGHT = 600;
     public static final int LIFT_POSITION_FIFTH_CONE = 600;
     public static final int LIFT_POSITION_FOURTH_CONE = 560; // keep it close to 5th in case 5th is missed.
@@ -63,12 +63,12 @@ public class FalconLift {
      */
     public int getPosition() {
         int position = LIFT_POSITION_INVALID;
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (liftMotor != null) {
             position = liftMotor.getCurrentPosition();
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
         return position;
     }
 
@@ -79,7 +79,7 @@ public class FalconLift {
      * @param telemetry   The telemetry to use.
      */
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Save reference to Hardware map
         hwMap = hardwareMap;
         this.telemetry = telemetry;
@@ -97,7 +97,7 @@ public class FalconLift {
 
         showTelemetry();
         telemetry.addData(TAG, "initialized");
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -130,17 +130,17 @@ public class FalconLift {
 
             // If lift zero is being reset, we want lower the lift physically as well.
             if (gamepad1.a || gamepad2.a) {
-                targetLiftPosition = FalconLift.LIFT_POSITION_SUB_STATION - endAutoOpLiftPosition;
+                targetLiftPosition = ViperLift.LIFT_POSITION_SUB_STATION - endAutoOpLiftPosition;
             } else if (gamepad1.x || gamepad2.x) {
-                targetLiftPosition = FalconLift.LIFT_POSITION_LOW_JUNCTION - endAutoOpLiftPosition;
+                targetLiftPosition = ViperLift.LIFT_POSITION_LOW_JUNCTION - endAutoOpLiftPosition;
             } else if (gamepad1.b || gamepad2.b) {
-                targetLiftPosition = FalconLift.LIFT_POSITION_MEDIUM_JUNCTION - endAutoOpLiftPosition;
+                targetLiftPosition = ViperLift.LIFT_POSITION_MEDIUM_JUNCTION - endAutoOpLiftPosition;
             } else if (gamepad1.y || gamepad2.y) {
-                targetLiftPosition = FalconLift.LIFT_POSITION_HIGH_JUNCTION - endAutoOpLiftPosition;
+                targetLiftPosition = ViperLift.LIFT_POSITION_HIGH_JUNCTION - endAutoOpLiftPosition;
             } else if (gamepad1.dpad_up || gamepad2.dpad_up) {
                 if (liftNearTarget(liftMotor.getCurrentPosition(), LIFT_POSITION_SUB_STATION - endAutoOpLiftPosition)) {
                     // Only when the lift is at intake level, bump it to the ground junction height.
-                    targetLiftPosition = FalconLift.LIFT_POSITION_GROUND_JUNCTION - endAutoOpLiftPosition;
+                    targetLiftPosition = ViperLift.LIFT_POSITION_GROUND_JUNCTION - endAutoOpLiftPosition;
                 } else {
                     targetLiftPosition = liftMotor.getCurrentPosition() + LIFT_POSITION_MANUAL_CHANGE;
                 }
@@ -174,7 +174,7 @@ public class FalconLift {
                 liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
-            double liftPower = FalconDriveTrain.ZERO_POWER;
+            double liftPower = ViperDriveTrain.ZERO_POWER;
             if (targetPosition > currentPosition) {
                 liftPower = LIFT_UP_POWER;
             } else if (targetPosition < currentPosition) {
@@ -187,7 +187,7 @@ public class FalconLift {
                 ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
                 while (!liftNearTarget(liftMotor.getCurrentPosition(), targetPosition) &&
                         runtime.milliseconds() < waitTime) {
-                    FalconUtils.sleep(10);
+                    ViperUtils.sleep(10);
                 }
             }
         } else {
@@ -199,13 +199,13 @@ public class FalconLift {
      * Emits lift motor telemetry. Helps with debugging.
      */
     public void showTelemetry() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (showTelemetry && liftMotor != null) {
             telemetry.addData(TAG, String.format(Locale.US, "Power %.2f, distance %d",
                     liftMotor.getPower(), liftMotor.getCurrentPosition()));
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -213,7 +213,7 @@ public class FalconLift {
      */
     public void stop() {
         if (liftMotor != null) {
-            liftMotor.setPower(FalconDriveTrain.ZERO_POWER);
+            liftMotor.setPower(ViperDriveTrain.ZERO_POWER);
         }
     }
 }

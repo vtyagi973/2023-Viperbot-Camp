@@ -1,40 +1,36 @@
-package org.firstinspires.ftc.teamcode.powerPlay.testOps;
+package org.firstinspires.ftc.teamcode.viperCamp.testOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconLift;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconLogger;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconUtils;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperHand;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperLogger;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperUtils;
 
 @Disabled
 @TeleOp(group = "TestOp")
-public class FalconLiftTeleOp extends OpMode {
-    private static final String TAG = "Lift";
+public class HandTeleOp extends OpMode {
     // Declare OpMode members
     private ElapsedTime runtime = null;
     private ElapsedTime loopTime = null;
-    public FalconLift falconLift = null;
 
-    // Start point for the lift
-    int currentPosition = FalconLift.LIFT_POSITION_SUB_STATION;
-    int targetLiftPosition;
+    ViperHand viperHand;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Initializing, please wait...");
         telemetry.update();
         runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         loopTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-        falconLift = new FalconLift();
-        falconLift.init(hardwareMap, telemetry);
-        FalconLogger.exit();
+        viperHand = new ViperHand();
+        viperHand.init(hardwareMap, telemetry, null);
+        ViperLogger.exit();
     }
 
     /*
@@ -44,7 +40,7 @@ public class FalconLiftTeleOp extends OpMode {
     public void init_loop() {
         telemetry.addData(">", "Initialization complete, Waiting for start.");
         telemetry.update();
-        FalconUtils.sleep(100);
+        ViperUtils.sleep(250);
     }
 
     /*
@@ -52,6 +48,10 @@ public class FalconLiftTeleOp extends OpMode {
      */
     @Override
     public void start() {
+        ViperLogger.enter();
+        telemetry.addData(">", "Starting Driver Op");
+        telemetry.update();
+        ViperLogger.exit();
     }
 
     /*
@@ -59,24 +59,14 @@ public class FalconLiftTeleOp extends OpMode {
      */
     @Override
     public void loop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Show the elapsed game time and wheel power.
         loopTime.reset();
-        telemetry.addData(">", "Use gamepad to move lift");
-        targetLiftPosition = FalconLift.LIFT_POSITION_INVALID;
-
-        if (gamepad1.a || gamepad2.a) {
-            targetLiftPosition = FalconLift.LIFT_POSITION_SUB_STATION;
-        } else if (gamepad1.x || gamepad2.x) {
-            targetLiftPosition = FalconLift.LIFT_POSITION_LOW_JUNCTION;
-        } else if (gamepad1.b || gamepad2.b) {
-            targetLiftPosition = FalconLift.LIFT_POSITION_MEDIUM_JUNCTION;
-        } else if (gamepad1.y || gamepad2.y) {
-            targetLiftPosition = FalconLift.LIFT_POSITION_HIGH_JUNCTION;
-        }
-
-        if (targetLiftPosition != FalconLift.LIFT_POSITION_INVALID) {
-            falconLift.moveLift(targetLiftPosition, true);
+        telemetry.addData(">", "Use left stick to small adjust servo position");
+        if (gamepad1.right_trigger >= 0.5 || gamepad2.right_trigger >= 0.5) {
+            viperHand.close(true);
+        } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
+            viperHand.open(false, true);
         }
 
         telemetry.addData(">", "Loop %.0f ms, cumulative %.0f seconds",
@@ -89,9 +79,9 @@ public class FalconLiftTeleOp extends OpMode {
      */
     @Override
     public void stop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Stopping Driver Op");
         telemetry.update();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }

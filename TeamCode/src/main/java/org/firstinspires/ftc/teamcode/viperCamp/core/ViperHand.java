@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -11,8 +11,8 @@ import java.util.Locale;
 /**
  * A class to manage the robot hand.
  */
-public class FalconHand {
-    private static final String TAG = "FalconHand";
+public class ViperHand {
+    private static final String TAG = "ViperHand";
     public static final String LEFT_PINCER_SERVO_NAME = "leftPincerServo";
     public static final String RIGHT_PINCER_SERVO_NAME = "rightPincerServo";
     private static final double LEFT_PINCER_CLOSE_POSITION = 0.4610;
@@ -27,12 +27,12 @@ public class FalconHand {
     public boolean handIsOpen;
     private HardwareMap hwMap = null;
     private Telemetry telemetry = null;
-    private FalconBot parent = null;
+    private ViperBot parent = null;
     private Servo leftPincerServo = null;
     private Servo rightPincerServo = null;
 
     /* Constructor */
-    public FalconHand() {
+    public ViperHand() {
     }
 
     /**
@@ -41,7 +41,7 @@ public class FalconHand {
      * @param waitTillClosed When true, waits till the hand closes.
      */
     public void close(boolean waitTillClosed) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (handIsOpen) {
             if (leftPincerServo != null) {
                 leftPincerServo.setPosition(LEFT_PINCER_CLOSE_POSITION);
@@ -56,13 +56,13 @@ public class FalconHand {
             }
 
             if (waitTillClosed) {
-                FalconUtils.sleep(CLOSE_TIME_MS);
+                ViperUtils.sleep(CLOSE_TIME_MS);
             }
 
             handIsOpen = false;
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -71,8 +71,8 @@ public class FalconHand {
      * @param hardwareMap The hardware map to use for initialization.
      * @param telemetry   The telemetry to use.
      */
-    public void init(HardwareMap hardwareMap, Telemetry telemetry, FalconBot robot) {
-        FalconLogger.enter();
+    public void init(HardwareMap hardwareMap, Telemetry telemetry, ViperBot robot) {
+        ViperLogger.enter();
         // Save reference to Hardware map
         hwMap = hardwareMap;
         this.telemetry = telemetry;
@@ -92,7 +92,7 @@ public class FalconHand {
         //close(false);
         showTelemetry();
         telemetry.addData(TAG, "initialized");
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -101,20 +101,20 @@ public class FalconHand {
      * @param waitTillOpen When true, waits till the hand opens fully.
      */
     public void open(boolean autoOpExecution, boolean waitTillOpen) {
-        FalconLogger.enter();
+        ViperLogger.enter();
 
         if (!handIsOpen) {
             if (enableDriverAssistance) {
                 int targetPosition;
                 if (autoOpExecution) {
-                    targetPosition = parent.falconLift.getPosition() - FalconLift.LIFT_POSITION_MANUAL_CHANGE;
+                    targetPosition = parent.viperLift.getPosition() - ViperLift.LIFT_POSITION_MANUAL_CHANGE;
                 } else {
-                    targetPosition = FalconLift.LIFT_POSITION_SUB_STATION - FalconLift.endAutoOpLiftPosition;
+                    targetPosition = ViperLift.LIFT_POSITION_SUB_STATION - ViperLift.endAutoOpLiftPosition;
                 }
 
-                if (parent.falconLift.getPosition() >
-                        FalconLift.LIFT_POSITION_LOW_JUNCTION - FalconLift.LIFT_POSITION_ERROR_MARGIN - FalconLift.endAutoOpLiftPosition) {
-                    parent.falconLift.moveLift(targetPosition, false);
+                if (parent.viperLift.getPosition() >
+                        ViperLift.LIFT_POSITION_LOW_JUNCTION - ViperLift.LIFT_POSITION_ERROR_MARGIN - ViperLift.endAutoOpLiftPosition) {
+                    parent.viperLift.moveLift(targetPosition, false);
                 }
             }
 
@@ -131,13 +131,13 @@ public class FalconHand {
             }
 
             if (waitTillOpen) {
-                FalconUtils.sleep(OPEN_TIME_MS);
+                ViperUtils.sleep(OPEN_TIME_MS);
             }
 
             handIsOpen = true;
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -160,12 +160,12 @@ public class FalconHand {
      * Emits lift motor telemetry. Helps with debugging.
      */
     public void showTelemetry() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (showTelemetry && leftPincerServo != null && rightPincerServo != null) {
             telemetry.addData(TAG, String.format(Locale.US, "Left %5.4f, Right %5.4f",
                     leftPincerServo.getPosition(), rightPincerServo.getPosition()));
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }

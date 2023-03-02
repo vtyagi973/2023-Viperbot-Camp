@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.testOps;
+package org.firstinspires.ftc.teamcode.viperCamp.testOps;
 
 import android.graphics.Color;
 
@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.hardware.SwitchableLight;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconLogger;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconUtils;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperLogger;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperUtils;
 
 @Disabled
 @TeleOp(group = "TestOp")
@@ -31,7 +31,7 @@ public class ColorSensorTeleOp extends OpMode {
 
     @Override
     public void init() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         loopTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
@@ -68,7 +68,7 @@ public class ColorSensorTeleOp extends OpMode {
         // Inform the driver that initialization is complete.
         telemetry.addData("TeleOp", "Initialized");
         telemetry.update();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /*
@@ -90,7 +90,7 @@ public class ColorSensorTeleOp extends OpMode {
         }
 
         colorSensor.setGain(gain);
-        FalconUtils.sleep(100);
+        ViperUtils.sleep(100);
     }
 
     /*
@@ -98,10 +98,10 @@ public class ColorSensorTeleOp extends OpMode {
      */
     @Override
     public void start() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData("TeleOp", "Ready");
         telemetry.update();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /*
@@ -109,7 +109,7 @@ public class ColorSensorTeleOp extends OpMode {
      */
     @Override
     public void loop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Show the elapsed game time and wheel power.
         loopTime.reset();
         telemetry.addData("Usage", "a: +gain, b: -gain, x: lightOff, y: lightOn");
@@ -166,7 +166,7 @@ public class ColorSensorTeleOp extends OpMode {
         telemetry.addData(">", "Loop %.0f ms, cumulative %.0f seconds",
                 loopTime.milliseconds(), runtime.seconds());
         telemetry.update();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /*
@@ -174,7 +174,7 @@ public class ColorSensorTeleOp extends OpMode {
      */
     @Override
     public void stop() {
-        FalconLogger.enter();
-        FalconLogger.exit();
+        ViperLogger.enter();
+        ViperLogger.exit();
     }
 }

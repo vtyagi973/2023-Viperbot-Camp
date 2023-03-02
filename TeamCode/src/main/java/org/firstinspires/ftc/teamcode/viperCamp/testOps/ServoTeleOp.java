@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.testOps;
+package org.firstinspires.ftc.teamcode.viperCamp.testOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -7,10 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconConePicker;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconHand;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconLogger;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconUtils;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperHand;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperLogger;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperUtils;
 
 @Disabled
 @TeleOp(group = "TestOp")
@@ -24,7 +23,7 @@ public class ServoTeleOp extends OpMode {
     static final int CYCLE_MS = 50;           // period of each cycle
     static final double MAX_POS = 1.0;        // Maximum rotational position
     static final double MIN_POS = 0.0;        // Minimum rotational position
-    static final String SERVO_NAME = FalconHand.RIGHT_PINCER_SERVO_NAME;
+    static final String SERVO_NAME = ViperHand.RIGHT_PINCER_SERVO_NAME;
 
     Servo servo;
     double position;
@@ -34,13 +33,13 @@ public class ServoTeleOp extends OpMode {
      */
     @Override
     public void init() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Initializing, please wait...");
         telemetry.update();
         runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         loopTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         servo = hardwareMap.get(Servo.class, SERVO_NAME);
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /*
@@ -57,7 +56,7 @@ public class ServoTeleOp extends OpMode {
                 servo.getDirection() == Servo.Direction.FORWARD ? "Forward" : "Reverse",
                 servo.getPosition());
         telemetry.update();
-        FalconUtils.sleep(250);
+        ViperUtils.sleep(250);
     }
 
     /*
@@ -65,11 +64,11 @@ public class ServoTeleOp extends OpMode {
      */
     @Override
     public void start() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Starting Driver Op");
         telemetry.update();
         position = (MIN_POS + MAX_POS) / 2.0;
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /*
@@ -77,7 +76,7 @@ public class ServoTeleOp extends OpMode {
      */
     @Override
     public void loop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Show the elapsed game time and wheel power.
         loopTime.reset();
         telemetry.addData(">", "Use left stick to small adjust servo position");
@@ -99,7 +98,7 @@ public class ServoTeleOp extends OpMode {
         telemetry.addData(">", "Loop %.0f ms, cumulative %.0f seconds",
                 loopTime.milliseconds(), runtime.seconds());
         telemetry.update();
-        FalconUtils.sleep(CYCLE_MS);
+        ViperUtils.sleep(CYCLE_MS);
     }
 
     /*
@@ -107,9 +106,9 @@ public class ServoTeleOp extends OpMode {
      */
     @Override
     public void stop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Stopping Driver Op");
         telemetry.update();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }

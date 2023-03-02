@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,8 +13,8 @@ import org.firstinspires.ftc.robotcore.internal.system.Assert;
 /**
  * A class to manage the built-in Gyroscope.
  */
-public class FalconGyro {
-    private static final String TAG = "FalconGyro";
+public class ViperGyro {
+    private static final String TAG = "ViperGyro";
     static final double HEADING_THRESHOLD = 0.20;
     public boolean showTelemetry = true;
     Telemetry telemetry = null;
@@ -30,7 +30,7 @@ public class FalconGyro {
     public static double Roll = 0.0;
 
     /* Constructor */
-    public FalconGyro() {
+    public ViperGyro() {
     }
 
     /**
@@ -41,10 +41,10 @@ public class FalconGyro {
      * @return The robot heading.
      */
     private double getHeading() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         Assert.assertNotNull(imu, "getHeading>imu");
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        FalconLogger.exit();
+        ViperLogger.exit();
         return angles.firstAngle;
     }
 
@@ -56,7 +56,7 @@ public class FalconGyro {
      * Positive headingOffset means the robot should spinAbsolute THREE (Clockwise) (CW) to reduce error.
      */
     public double getHeadingOffset(double targetHeading) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Z increases when robot turns left!
         // Heading is never more than 180 or less than -180
 
@@ -79,7 +79,7 @@ public class FalconGyro {
             headingOffset = targetHeading + Heading;
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
         return headingOffset;
     }
 
@@ -91,10 +91,10 @@ public class FalconGyro {
      * @param The robot roll.
      */
     private double getRoll() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         Assert.assertNotNull(imu, "getRoll>imu");
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        FalconLogger.exit();
+        ViperLogger.exit();
         return angles.secondAngle;
     }
 
@@ -106,10 +106,10 @@ public class FalconGyro {
      * @param The robot pitch
      */
     private double getPitch() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         Assert.assertNotNull(imu, "getPitch>imu");
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        FalconLogger.exit();
+        ViperLogger.exit();
         return angles.thirdAngle;
     }
 
@@ -122,9 +122,9 @@ public class FalconGyro {
      * @return The steering correction after applying the proportional gain coefficient
      */
     public double getSteeringCorrection(double headingOffset, double pCoEff) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         double steeringCorrection = headingOffset * pCoEff;
-        FalconLogger.exit();
+        ViperLogger.exit();
         return steeringCorrection;
     }
 
@@ -135,7 +135,7 @@ public class FalconGyro {
      * @param telemetry   The telemetry object to use.
      */
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Save reference to Hardware map
         this.telemetry = telemetry;
         BNO055IMU.Parameters imuParameters;
@@ -158,7 +158,7 @@ public class FalconGyro {
         imu.initialize(imuParameters);
         while (!imu.isGyroCalibrated()) {
             // Wait till gyro is fully calibrated.
-            FalconUtils.sleep(100);
+            ViperUtils.sleep(100);
         }
 
         read();
@@ -173,34 +173,34 @@ public class FalconGyro {
 
         showTelemetry();
         telemetry.addData("gyro", "initialized");
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
      * Read the gyro and store information for later use.
      */
     public void read() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         Assert.assertNotNull(imu, "read>imu");
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         Heading = angles.firstAngle;
         Roll = angles.secondAngle;
         Pitch = angles.thirdAngle;
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
      * Display IMU (gyro) telemetry.
      */
     public void showTelemetry() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (showTelemetry) {
             telemetry.addData("Heading (Z)", "%.2f, offset: %.2f", Heading, initialTeleOpHeading);
             telemetry.addData("Roll", Roll);
             telemetry.addData("Pitch", Pitch);
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }
 

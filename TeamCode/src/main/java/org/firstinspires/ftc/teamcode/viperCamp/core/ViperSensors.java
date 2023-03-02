@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -7,14 +7,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 /**
  * A class to manage the parent sensors.
  */
-public class FalconSensors {
-    private static final String TAG = "FalconSensors";
+public class ViperSensors {
+    private static final String TAG = "ViperSensors";
     private HardwareMap hwMap = null;
     private Telemetry telemetry = null;
-    private FalconBot parent = null;
+    private ViperBot parent = null;
     public boolean showTelemetry = true;
 
-    private FalconSensors() {
+    private ViperSensors() {
     }
 
     /**
@@ -23,18 +23,18 @@ public class FalconSensors {
      * @param hardwareMap The hardware map to use for initialization.
      * @param telemetry   The telemetry to use.
      */
-    public void init(HardwareMap hardwareMap, Telemetry telemetry, FalconBot robot) {
-        FalconLogger.enter();
+    public void init(HardwareMap hardwareMap, Telemetry telemetry, ViperBot robot) {
+        ViperLogger.enter();
         // Save reference to Hardware map
         hwMap = hardwareMap;
         this.telemetry = telemetry;
         this.parent = robot;
         showTelemetry();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     public void showTelemetry() {
-        FalconLogger.enter();
-        FalconLogger.exit();
+        ViperLogger.enter();
+        ViperLogger.exit();
     }
 }

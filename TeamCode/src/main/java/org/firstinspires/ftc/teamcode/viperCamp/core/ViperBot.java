@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.core;
+package org.firstinspires.ftc.teamcode.viperCamp.core;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -6,44 +6,44 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class FalconBot {
-    private static final String TAG = "FalconBot";
+public class ViperBot {
+    private static final String TAG = "ViperBot";
     private boolean showTelemetry = true;
-    public FalconBulkRead bulkRead = null;
-    public FalconDriveTrain driveTrain = null;
+    public ViperBulkRead bulkRead = null;
+    public ViperDriveTrain driveTrain = null;
 
     // hand, lift, picker, aligner
-    public FalconGyro gyro = null;
-    public FalconLift falconLift = null;
-    public FalconConePicker conePicker = null;
-    public FalconHand falconHand = null;
+    public ViperGyro gyro = null;
+    public ViperLift viperLift = null;
+    public ViperConePicker conePicker = null;
+    public ViperHand viperHand = null;
     HardwareMap hwMap = null;
     Telemetry telemetry = null;
 
     /* Constructor */
-    public FalconBot() {
+    public ViperBot() {
     }
 
     public void disableTelemetry() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         showTelemetry = false;
         driveTrain.showTelemetry = showTelemetry;
         gyro.showTelemetry = showTelemetry;
-        falconLift.showTelemetry = showTelemetry;
+        viperLift.showTelemetry = showTelemetry;
         conePicker.showTelemetry = showTelemetry;
-        falconHand.showTelemetry = showTelemetry;
-        FalconLogger.exit();
+        viperHand.showTelemetry = showTelemetry;
+        ViperLogger.exit();
     }
 
     public void enableTelemetry() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         showTelemetry = true;
         driveTrain.showTelemetry = showTelemetry;
         gyro.showTelemetry = showTelemetry;
-        falconLift.showTelemetry = showTelemetry;
+        viperLift.showTelemetry = showTelemetry;
         conePicker.showTelemetry = showTelemetry;
-        falconHand.showTelemetry = showTelemetry;
-        FalconLogger.exit();
+        viperHand.showTelemetry = showTelemetry;
+        ViperLogger.exit();
     }
 
     public boolean telemetryEnabled() {
@@ -59,54 +59,54 @@ public class FalconBot {
      *                    Typically, you would initialize the webcams in autoOps only.
      */
     public void init(HardwareMap hardwareMap, Telemetry telemetry, Boolean initWebCams) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Save reference to Hardware map
         hwMap = hardwareMap;
         this.telemetry = telemetry;
 
-        bulkRead = new FalconBulkRead(hardwareMap);
-        driveTrain = new FalconDriveTrain(this);
+        bulkRead = new ViperBulkRead(hardwareMap);
+        driveTrain = new ViperDriveTrain(this);
         driveTrain.init(hardwareMap, telemetry);
-        gyro = new FalconGyro();
+        gyro = new ViperGyro();
         gyro.init(hardwareMap, telemetry);
-        falconLift = new FalconLift();
-        falconLift.init(hardwareMap, telemetry);
-        conePicker = new FalconConePicker();
+        viperLift = new ViperLift();
+        viperLift.init(hardwareMap, telemetry);
+        conePicker = new ViperConePicker();
         conePicker.init(hardwareMap, telemetry);
-        falconHand = new FalconHand();
-        falconHand.init(hardwareMap, telemetry, this);
+        viperHand = new ViperHand();
+        viperHand.init(hardwareMap, telemetry, this);
 
         telemetry.addData(TAG, "initialized");
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
      * Operate the robot in tele operation.
      */
     public void operateRobot(Gamepad gamepad1, Gamepad gamepad2, ElapsedTime loopTime) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Drive operation
         driveTrain.fieldOrientedDrive(gamepad1, gamepad2, loopTime);
 
         // Hand operation
-        falconHand.operateHand(gamepad1, gamepad2);
+        viperHand.operateHand(gamepad1, gamepad2);
 
         // Cone picker operation
         conePicker.operateConePicker(gamepad1, gamepad2);
 
         // Lift operation
-        falconLift.operateLift(gamepad1, gamepad2);
+        viperLift.operateLift(gamepad1, gamepad2);
 
         if (showTelemetry) {
             gyro.showTelemetry();
             showGamePadTelemetry(gamepad1);
             driveTrain.showTelemetry();
-            falconLift.showTelemetry();
+            viperLift.showTelemetry();
             conePicker.showTelemetry();
-            falconHand.showTelemetry();
+            viperHand.showTelemetry();
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /**
@@ -115,7 +115,7 @@ public class FalconBot {
      * @param gamePad The gamePad.
      */
     public void showGamePadTelemetry(Gamepad gamePad) {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (showTelemetry) {
             telemetry.addData("LeftStick", "%.2f %.2f",
                     gamePad.left_stick_x, gamePad.left_stick_y);
@@ -123,19 +123,19 @@ public class FalconBot {
                     gamePad.right_stick_x, gamePad.right_stick_y);
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     public void stopEverything() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         if (driveTrain != null) {
             driveTrain.stop();
         }
 
-        if (falconLift != null) {
-            falconLift.stop();
+        if (viperLift != null) {
+            viperLift.stop();
         }
 
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.powerPlay.testOps;
+package org.firstinspires.ftc.teamcode.viperCamp.testOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconLift;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconLogger;
-import org.firstinspires.ftc.teamcode.powerPlay.core.FalconUtils;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperLift;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperLogger;
+import org.firstinspires.ftc.teamcode.viperCamp.core.ViperUtils;
 
 import java.util.Locale;
 
@@ -23,15 +23,15 @@ public class LiftTeleOp extends OpMode {
     public DcMotor liftMotor = null;
 
     // Start point for the lift
-    int currentPosition = FalconLift.LIFT_POSITION_SUB_STATION;
-    int targetPosition = FalconLift.LIFT_POSITION_SUB_STATION;
+    int currentPosition = ViperLift.LIFT_POSITION_SUB_STATION;
+    int targetPosition = ViperLift.LIFT_POSITION_SUB_STATION;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Initializing, please wait...");
         telemetry.update();
         runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -41,7 +41,7 @@ public class LiftTeleOp extends OpMode {
         liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 
     /*
@@ -51,7 +51,7 @@ public class LiftTeleOp extends OpMode {
     public void init_loop() {
         telemetry.addData(">", "Initialization complete, Waiting for start.");
         telemetry.update();
-        FalconUtils.sleep(100);
+        ViperUtils.sleep(100);
     }
 
     /*
@@ -66,7 +66,7 @@ public class LiftTeleOp extends OpMode {
      */
     @Override
     public void loop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         // Show the elapsed game time and wheel power.
         loopTime.reset();
         telemetry.addData(">", "Use DPad up/down to move lift");
@@ -79,7 +79,7 @@ public class LiftTeleOp extends OpMode {
             targetPosition--;
         }
 
-        targetPosition = Range.clip(targetPosition, FalconLift.LIFT_POSITION_SUB_STATION, FalconLift.LIFT_POSITION_HIGH_JUNCTION);
+        targetPosition = Range.clip(targetPosition, ViperLift.LIFT_POSITION_SUB_STATION, ViperLift.LIFT_POSITION_HIGH_JUNCTION);
         telemetry.addData("targetPosition", "%d", targetPosition);
 
         if (targetPosition != currentPosition) {
@@ -90,9 +90,9 @@ public class LiftTeleOp extends OpMode {
 
         double liftPower = 0;
         if (targetPosition > currentPosition) {
-            liftPower = FalconLift.LIFT_UP_POWER;
+            liftPower = ViperLift.LIFT_UP_POWER;
         } else if (targetPosition < currentPosition) {
-            liftPower = FalconLift.LIFT_DOWN_POWER;
+            liftPower = ViperLift.LIFT_DOWN_POWER;
         }
 
         liftMotor.setPower(liftPower);
@@ -109,9 +109,9 @@ public class LiftTeleOp extends OpMode {
      */
     @Override
     public void stop() {
-        FalconLogger.enter();
+        ViperLogger.enter();
         telemetry.addData(">", "Stopping Driver Op");
         telemetry.update();
-        FalconLogger.exit();
+        ViperLogger.exit();
     }
 }
