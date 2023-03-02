@@ -1,0 +1,5 @@
+Device File Information
+    The config file is at /sdcard/FIRST
+    It is backed up at \Software\Backups\Config\freightDriveConfig.xml
+
+    Match logs are at /sdcard/FIRST/matchlogs/Match-0-AllianceHub+Warehouse.txt
